@@ -1,0 +1,267 @@
+body {
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+  }
+  
+  /*--- navigation bar ---*/
+  
+  .mainnavbar{
+    /* background: darkblue; */
+    /* color: white;  */
+    font-weight: lighter; 
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'; */
+    font-family: 'Roboto', sans-serif;
+    min-height: 6px;
+    margin-bottom: 5px; 
+    font-size: smaller;
+    background-color: white;
+    padding: 0px;
+    }
+
+    .mainnavbar .nav-item {
+      border-radius: 10px;
+      margin-right: 2px;
+    }
+  
+    subnavbar{
+      /* background: darkblue; */
+    /* color: white;  */
+    font-weight: lighter; 
+    /* font-family: 'Franklin Gothic Medium', 'Arial Narrow', 'Arial', 'sans-serif'; */
+    font-family: 'Roboto', sans-serif;
+    min-height: 6px;
+    margin-bottom: 5px; 
+    font-size: smaller;
+    background-color: white;
+    padding: 0px;
+    }
+
+
+
+  .tooltitle{
+    background-color: rgb(24, 65, 65);
+    color: rgb(221, 211, 211);
+    /* font-size: 10px; */
+    /* padding-top: 5px; */
+    /* margin-left: 1em; */
+    /* padding-left: 10px;
+    padding-right: 10px; */
+    padding: 2px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  }
+  
+.score{
+  text-align: center;
+}
+
+
+  .header {
+/* For adding image, we can add background image property here */
+    
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+
+  .description {
+    
+    position: absolute;
+    top: 10%;
+    text-align: left;
+  }
+  .description h2 {
+    color: rgb(255, 255, 255);
+  }
+  .description p {
+    color: #fff;
+    font-size: 1.3rem;
+    line-height: 1.5;
+  }
+
+  /* Maps */
+
+  /* Physical Map */
+  #mapid { 
+    width: 100px;
+    height:410px;
+    min-height: 100%;
+    min-width: 100%;
+    display: block; 
+  } 
+  
+  /* CyberPhysical Map */
+  #overview-map { height: 400px; }
+  
+  /* Cyber Map */
+  #cyber-map {height: 470px; }
+
+
+
+  .features {
+    position: relative;
+  }
+
+  .feature-title {
+    color: rgb(230, 218, 218);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 20px; 
+  }
+
+  .with-margin{
+    margin-bottom: 5px;
+  }
+
+  .buses{
+      text-align: center;
+      margin-bottom: 12px;
+  }
+
+  .voltages-table{
+      margin-top: 20%;
+  }
+
+  .voltage-labels{
+    margin-top: 80%;
+  }
+
+  .with-voltage-margin{
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .table th {
+    text-align: center;
+  }
+
+  #linechart{
+    height: 480px;
+  }
+
+  .red {
+    background-color:lightcoral !important;
+  }
+
+  .green {
+    background-color: lightgreen !important;
+  }
+
+  .orange {
+    background-color: orange !important;
+  }
+
+  div.card {
+    /* width: 100%; */
+    width: 100%;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #f9f9f9;
+    padding: 0px 0px;
+    color: rgb(0, 0, 0);
+    /* text-align: center; */
+ }
+
+ div.card2 {
+    /* width: 250px; */
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background: #f9f9f9;
+    color: white;
+    /* padding: 20px 20px; */
+    /* text-align: center; */
+ }
+
+ div.probcard {
+  /* width: 100%; */
+  width: 100%;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: #f9f9f9;
+  padding: 5px 5px;
+  color: rgb(0, 0, 0);
+  margin-top: 10px;
+  height: 220px;
+  /* text-align: center; */
+}
+
+
+
+ .pagination .page-item.active .page-link { background-color: #000; }
+
+ div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
+ background-color: #000;
+ }
+ 
+ .pagination .page-item.active .page-link:hover {
+ background-color: #000;
+ }
+
+ .text-info{
+   color: #f9f9f9 !important;
+ }
+
+
+.nav-link{
+  padding: 0px;
+}
+
+ .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+   color: white;
+   background-color: #1e4b80;
+   font-weight: bold !important;
+ }
+
+ .nav-pills .nav-link, .nav-pills .show>.nav-link {
+  color: rgb(0, 0, 0);
+  background-color: #9fc6eeb4;
+  font-weight: bold !important;
+}
+
+.align-middle{
+  text-align: center; margin-top: 5px; margin-bottom: 0px;
+}
+
+  /* progress::-webkit-progress-value { background: red; } */
+
+  #progressred::-webkit-progress-value {
+    background:rgb(240, 8, 8);
+  }
+
+  #progressgreen::-webkit-progress-value { 
+    background: green; 
+  }
+
+  #progressorange::-webkit-progress-value { 
+    background: orange; 
+  }
+
+
+.progress:before {
+  content:attr(data-text);
+  position:absolute;
+  left:0;
+  right:0;
+  color: white;
+  
+}
+
+.progress {
+ text-align:center;
+ display:inline-block;
+ position:relative;
+}
+
+/* span{   */
+  /* position: absolute; */
+  /* top: -2px;
+  left: 50%;
+  font-size: 12px;
+} */
+
+
+/* Removing extra space between the table and pagination index */
+div.dataTables_wrapper div.dataTables_info {
+  padding-top: 0em;
+  height: 0em;
+}
