@@ -89,11 +89,20 @@ def result_chart_data():
 @app.route('/result_events/<int:id>/')
 def result_chart_data_page(id):
     query_results = db.session.query(syncAED_factor_data).all()
-    result = SyncAEDFactor_schemas.dump(query_results[id*10:id*10+10])
+    result = SyncAEDFactor_schemas.dump(query_results[id*7:id*7+7])
     print(result)
     return jsonify(result)
 	
+@app.route('/result_events/chart_data/<int:id>/')
+def result_chart_data_results(id):
+    query_results = db.session.query(syncAED_factor_data.id, syncAED_factor_data.vol_mag, syncAED_factor_data.vol_angle, syncAED_factor_data.current_mag, syncAED_factor_data.current_angle, syncAED_factor_data.frequency, syncAED_factor_data.rocof)
+    start = 0
+    if(id-30>0):
+        start = id-30
+    result = SyncAEDFactor_schemas.dump(query_results[start:(start+30)])
+    print(result)
+    return jsonify(result)
 
-
+	
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, port=9002)
