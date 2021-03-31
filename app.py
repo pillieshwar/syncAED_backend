@@ -89,7 +89,7 @@ def result_chart_data():
 @app.route('/result_events/<int:id>/')
 def result_chart_data_page(id):
     query_results = db.session.query(syncAED_factor_data).all()
-    result = SyncAEDFactor_schemas.dump(query_results[id*7:id*7+7])
+    result = SyncAEDFactor_schemas.dump(query_results[id*5:id*5+5])
     print(result)
     return jsonify(result)
 	
