@@ -7,7 +7,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask import Flask, Response, render_template, jsonify, request
 from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.sql import alias
 
 # Initializing the app
 app = Flask(__name__)
@@ -27,7 +26,6 @@ Base.prepare(db.engine, reflect=True)
 # SyncAED tables
 syncAED_bus_data = Base.classes.syncAED_bus_data
 syncAED_factor_data = Base.classes.syncAED_factor_data
-syncAED_bus_edges = Base.classes.syncAED_bus_edges
 
 #Schemas
 class SyncAEDFactor(ma.Schema):
@@ -44,13 +42,6 @@ class SyncBusData(ma.Schema):
 SyncBusData_schema = SyncBusData()
 SyncBusData_schemas = SyncBusData(many=True)
 
-class SyncAEDBusEdges(ma.Schema):
-    class Meta:
-        fields = ('id', 'from_bus', 'to_bus', 'from_latitude','from_longitude', 'to_latitude','to_longitude')
-
-SyncAEDBusEdges_schema = SyncAEDBusEdges()
-SyncAEDBusEdges_schemas = SyncAEDBusEdges(many=True)
-
 class SyncAEDFactorWithLocationData(ma.Schema):
     class Meta:
         fields = ('id', 'bus_id', 'pmu_id', 'event_date', 'event_time', 'vol_mag', 'vol_angle', 'current_mag', 'current_angle', 'frequency', 'rocof', 'latitude', 'longitude')
@@ -58,12 +49,6 @@ class SyncAEDFactorWithLocationData(ma.Schema):
 SyncAEDFactorWithLocationData_schema = SyncAEDFactorWithLocationData()
 SyncAEDFactorWithLocationData_schemas = SyncAEDFactorWithLocationData(many=True)
 
-class SyncAEDBusEdgesWithLocationData(ma.Schema):
-    class Meta:
-        fields = ('id', 'from_bus', 'to_bus','bus_id', 'bus_name', 'base_kv', 'latitude', 'longitude', 'bus_status', 'v_min', 'v_max')
-
-SyncAEDBusEdgesWithLocationData_schema = SyncAEDBusEdgesWithLocationData()
-SyncAEDBusEdgesWithLocationData_schemas = SyncAEDBusEdgesWithLocationData(many=True)
 
 @app.route('/')
 def index():
@@ -104,13 +89,6 @@ def result_chart_data():
 @app.route('/result_events/<int:id>/')
 def result_chart_data_page(id):
     query_results = db.session.query(syncAED_factor_data).all()
-    result = SyncAEDFactor_schemas.dump(query_results[id*6:id*6+6])
-    print(result)
-    return jsonify(result)
-	
-@app.route('/main_result_events/<int:id>/')
-def main_page(id):
-    query_results = db.session.query(syncAED_factor_data).all()
     result = SyncAEDFactor_schemas.dump(query_results[id*5:id*5+5])
     print(result)
     return jsonify(result)
@@ -125,39 +103,6 @@ def result_chart_data_results(id):
     print(result)
     return jsonify(result)
 
-@app.route('/main_mapdata')
-def main_map_data():
-    query_results = db.session.query(syncAED_bus_data.bus_id,syncAED_bus_data.bus_name,syncAED_bus_data.bus_status,syncAED_bus_data.latitude,syncAED_bus_data.longitude)
-    result = SyncBusData_schemas.dump(query_results)
-    return jsonify(result)
-
-# @app.route('/map_node_locations')
-# def nodeLoc_data():
-    # query_results = db.session.query(syncAED_bus_data.bus_id,syncAED_factor_data).filter(syncAED_bus_data.bus_id == syncAED_factor_data.bus_id).filter(syncAED_factor_data.vol_mag == "8.001").all()
-    # result = SyncAEDFactorWithLocationData_schemas.dump(query_results)
-    # print(result)
-    # return jsonify({'results' : result})
-	
-@app.route('/map_edges')
-def map_edges():
-    query_results = db.session.query(syncAED_bus_edges).all()
-    result = SyncAEDBusEdges_schemas.dump(query_results)
-    print(result)
-    return jsonify(result)
-
-# @app.route('/map_node_locations')
-# def nodeLoc_data():
-    # query_results = db.session.query(syncAED_bus_data.latitude,syncAED_bus_data.longitude,syncAED_bus_edges.from_bus,syncAED_bus_edges.to_bus).filter(syncAED_bus_edges.from_bus == syncAED_bus_data.bus_id ).all()
-    # query_results2 = db.session.query(syncAED_bus_data.latitude,syncAED_bus_data.longitude,syncAED_bus_edges.from_bus,syncAED_bus_edges.to_bus).filter(syncAED_bus_edges.to_bus == syncAED_bus_data.bus_id ).all()
-    # print(query_results[0].from_bus)
-    # arr = [0 for i in range(len(query_results))]
-    # for i in range(len(query_results)):
-        # arr[i] = 'x : '+query_results[i].latitude
-    # print(jsonify(arr))
-    # new_list = query_results[1:3]+query_results2[1:3]	
-    # result = SyncAEDBusEdgesWithLocationData_schemas.dump(new_list)
-    # print(result)
-    # return jsonify(arr)
 	
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, port=9002)
