@@ -16,7 +16,7 @@ random.seed()  # Initialize the random number generator
 # Setup DB marshmallow vars
 # db = dbmodule.setup(app)
 app.config['DEBUG'] = True
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/syncaeddb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://eshwar:eshwar123@localhost/postgres'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -28,6 +28,7 @@ Base.prepare(db.engine, reflect=True)
 syncAED_bus_data = Base.classes.syncAED_bus_data
 syncAED_factor_data = Base.classes.syncAED_factor_data
 syncAED_bus_edges = Base.classes.syncAED_bus_edges
+syncAED_pmu_localization = Base.classes.syncAED_pmu_localization
 
 #Schemas
 class SyncAEDFactor(ma.Schema):
@@ -64,6 +65,13 @@ class SyncAEDBusEdgesWithLocationData(ma.Schema):
 
 SyncAEDBusEdgesWithLocationData_schema = SyncAEDBusEdgesWithLocationData()
 SyncAEDBusEdgesWithLocationData_schemas = SyncAEDBusEdgesWithLocationData(many=True)
+
+class SyncAEDPmuLocalization(ma.Schema):
+    class Meta:
+        fields = ('id', 'detected_location', 'pmu1_id','pmu1_bus_id', 'pmu1_norm_score', 'pmu2_id', 'pmu2_bus_id', 'pmu2_norm_score', 'event_date', 'event_time', 'event_type')
+
+SyncAEDPmuLocalization_schema = SyncAEDPmuLocalization()
+SyncAEDPmuLocalization_schemas = SyncAEDPmuLocalization(many=True)
 
 @app.route('/')
 def index():
@@ -107,6 +115,27 @@ def result_chart_data_page(id):
     result = SyncAEDFactor_schemas.dump(query_results[id*6:id*6+6])
     print(result)
     return jsonify(result)
+
+@app.route('/pmu_localization/<int:id>/')
+def result_pmu_localization_page(id):
+    query_results = db.session.query(syncAED_pmu_localization).all()
+    result = SyncAEDPmuLocalization_schemas.dump(query_results[id*9:id*9+9])
+    print(result)
+    return jsonify(result)
+
+@app.route('/result_events_localization/<int:id>/')
+def result_chart_data_page_localization(id):
+    query_results = db.session.query(syncAED_factor_data).all()
+    result = SyncAEDFactor_schemas.dump(query_results[id*9:id*9+9])
+    print(result)
+    return jsonify(result)
+
+@app.route('/result_pmu_localization/<int:id>/')
+def result_pmu_localization(id):
+    query_results = db.session.query(syncAED_pmu_localization).all()
+    result = SyncAEDPmuLocalization_schemas.dump(query_results[id*9:id*9+9])
+    print(result)
+    return jsonify(result)
 	
 @app.route('/main_result_events/<int:id>/')
 def main_page(id):
@@ -145,6 +174,13 @@ def map_edges():
     print(result)
     return jsonify(result)
 
+@app.route('/pmu_localization')
+def pmu_localization():
+    query_results = db.session.query(syncAED_pmu_localization).all()
+    result = SyncAEDPmuLocalization_schemas.dump(query_results)
+    print(result)
+    return jsonify(result)
+    
 # @app.route('/map_node_locations')
 # def nodeLoc_data():
     # query_results = db.session.query(syncAED_bus_data.latitude,syncAED_bus_data.longitude,syncAED_bus_edges.from_bus,syncAED_bus_edges.to_bus).filter(syncAED_bus_edges.from_bus == syncAED_bus_data.bus_id ).all()
