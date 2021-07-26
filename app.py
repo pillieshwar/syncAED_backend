@@ -136,6 +136,13 @@ def result_pmu_localization(id):
     result = SyncAEDPmuLocalization_schemas.dump(query_results[id*9:id*9+9])
     print(result)
     return jsonify(result)
+
+@app.route('/result_pmu_localization_overview/<int:id>/')
+def result_pmu_localization_overview(id):
+    query_results = db.session.query(syncAED_pmu_localization).all()
+    result = SyncAEDPmuLocalization_schemas.dump(query_results[id*5:id*5+5])
+    print(result)
+    return jsonify(result)
 	
 @app.route('/main_result_events/<int:id>/')
 def main_page(id):
@@ -180,7 +187,7 @@ def pmu_localization():
     result = SyncAEDPmuLocalization_schemas.dump(query_results)
     print(result)
     return jsonify(result)
-    
+
 # @app.route('/map_node_locations')
 # def nodeLoc_data():
     # query_results = db.session.query(syncAED_bus_data.latitude,syncAED_bus_data.longitude,syncAED_bus_edges.from_bus,syncAED_bus_edges.to_bus).filter(syncAED_bus_edges.from_bus == syncAED_bus_data.bus_id ).all()
