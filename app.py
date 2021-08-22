@@ -147,7 +147,7 @@ def result_pmu_localization_overview(id):
 	
 @app.route('/main_result_events/<int:id>/')
 def main_page(id):
-    query_results = db.session.query(syncAED_factor_data).all()
+    query_results = db.session.query(syncAED_factor_data).order_by('confidence_level').all()
     result = SyncAEDFactor_schemas.dump(query_results[id*5:id*5+5])
     return jsonify(result)
 	
